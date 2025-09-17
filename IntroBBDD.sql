@@ -108,3 +108,10 @@ ORDER BY total DESC;
 9. Vuelos con retraso de salida superior a una hora
 */
 
+SELECT *, actual_departure - scheduled_departure as tiempo_total_retraso
+
+FROM flights
+
+WHERE (actual_departure - scheduled_departure) > '01:00:00'
+
+ORDER BY tiempo_total_retraso DESC;
