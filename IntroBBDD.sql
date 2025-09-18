@@ -2,7 +2,7 @@
 1. Escribe una consulta que recupere los Vuelos (flights) y su identificador que figuren con status On Time.
 */
 
-SELECT flight_id, flight_no  
+SELECT flight_id, flight_no, status  
 
 FROM flights
 
@@ -19,7 +19,7 @@ SELECT *
 
 FROM bookings
 
-WHERE total_amount >= 1000000
+WHERE total_amount > 1000000
 
 ORDER BY total_amount desc;
 
@@ -27,47 +27,36 @@ ORDER BY total_amount desc;
 3. Escribe una consulta que extraiga todas las columnas de los datos de los modelos de aviones disponibles (aircraft_data).
 */
 
-SELECT a.*, b.status
-
-FROM aircrafts_data AS a
-
-INNER JOIN flights AS b
-	ON a.aircraft_code = b.aircraft_code 
-
-WHERE b.status = 'Scheduled';
+SELECT * FROM aircrafts_data;
 
 /*
 4. Con el resultado anterior visualizado previamente, escribe una consulta que extraiga los identificadores de vuelo que han volado con un Boeing 737. (Código Modelo Avión = 733)
 */
 
-SELECT b.flight_id, a.aircraft_code 
+SELECT flight_id, aircraft_code 
 
-FROM aircrafts_data AS a
+FROM flights 
 
-INNER JOIN flights AS b
-	ON a.aircraft_code = b.aircraft_code 
-
-WHERE a.aircraft_code = '733';
+WHERE aircraft_code = '733';
 
 /*
 5. Escribe una consulta que te muestre la información detallada de los tickets que han comprado las personas que se llaman Irina.
 */
 
-SELECT *
+SELECT a.passenger_name, b.*
 
 FROM tickets AS a 
 
 INNER JOIN ticket_flights AS b
 	ON a.ticket_no = b.ticket_no
 
-WHERE passenger_name 
-	LIKE 'IRINA%';
+WHERE passenger_name LIKE 'IRINA%';
 
 /*
 6. Mostrar las ciudades con más de un aeropuerto.
 */
 
-SELECT city, COUNT(*) as TOTAL
+SELECT city, COUNT(*) as total
 
 FROM airports_data
 
@@ -75,19 +64,19 @@ GROUP BY city
 
 HAVING COUNT(*) > 1
 
-ORDER BY TOTAL DESC;
+ORDER BY total DESC;
 
 /*
 7. Mostrar el número de vuelos por modelo de avión.
 */
 
-SELECT aircraft_code, COUNT(*) AS total
+SELECT aircraft_code, COUNT(*) AS total_vuelos
 
 FROM flights
 
 GROUP BY aircraft_code
 
-ORDER BY total DESC;
+ORDER BY total_vuelos DESC;
 
 
 /*
